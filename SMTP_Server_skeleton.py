@@ -73,7 +73,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     # Fill in start
     clientSocket.send("QUIT\r\n".encode())
     message=clientSocket.recv(1024)
-    print (message)
+    #print (message)
     clientSocket.close()
     # Fill in end
 
