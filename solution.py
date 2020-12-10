@@ -41,8 +41,9 @@ def checksum(string):
 def build_packet():
     CheckSumCalc = 0
     ID = os.getpid() & 0xFFFF
+    pid = os.getpid()
     #getheader = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, CheckSumCalc, ID, 1)
-    getheader = struct.pack("!HHHHH", ICMP_ECHO_REQUEST, 0, myChecksum, pid, 1)
+    getheader = struct.pack("!HHHHH", ICMP_ECHO_REQUEST, 0, CheckSumCalc, pid, 1)
     data = struct.pack("d", time.time())
     CheckSumCalc = checksum(getheader + data) 
     if sys.platform == 'linux2':
@@ -93,7 +94,7 @@ def get_route(hostname):
 
             except timeout:
                 continue
-                
+
             else:
                 icmpgetheader = recvPacket[20:28]
                 request_type, code, checksum, packetID, sequence = struct.unpack("bbHHh", icmpgetheader)
@@ -120,3 +121,4 @@ def get_route(hostname):
             finally:
 
                 mySocket.close()
+
